@@ -66,6 +66,13 @@ Esto permitió mejorar la **consistencia de datos** y la **experiencia de usuari
 
 ---
 
+## 🎥 Video demostración
+
+📺 Ver demo de la aplicación:  
+👉 [MineraSalud](https://drive.google.com/drive/folders/19yxxffCvNpzDV8Nlx3_SiM3t9UDTT_80?usp=sharing)
+
+---
+
 ## 🚀 Instalación y Ejecución
 
 ### Requisitos
