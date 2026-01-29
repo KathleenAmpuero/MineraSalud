@@ -25,7 +25,7 @@ Este proyecto fue desarrollado como parte de un **proyecto académico**, aplican
 - 📅 Calendario interactivo con días destacados según registros existentes
 - 🔍 Visualización detallada de síntomas por día
 - 🎨 Indicadores visuales (colores) para identificar días con información
-- 🪟 Modal de detalle diario con información organizada y legible
+- 📋 Modal de detalle diario con información organizada y legible
 - 🔐 Gestión de datos asociada a usuario autenticado
 
 ---
