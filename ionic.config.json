@@ -1,0 +1,7 @@
+{
+  "name": "MineraSalud",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

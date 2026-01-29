@@ -1,0 +1,37 @@
+<app-header
+  title="Mitos y realidades"
+  [logo]="false"
+  [backButton]="closeModal.bind(this)"
+  headerClass="backdrop-blur-none {{ myth.bgMuted }}"
+  buttonClass="{{ myth.color }}"
+></app-header>
+
+<ion-content>
+  <div class="flex flex-col h-full {{ myth.bgMuted }} ">
+    <section
+      class="text-center flex flex-col items-center justify-center flex-1 px-6"
+    >
+      <div
+        class="size-48 rounded-full flex items-center justify-center {{
+          myth.color
+        }}"
+      >
+        <lucide-icon [img]="myth.icon" class="size-20"></lucide-icon>
+      </div>
+      <h2 class="text-2xl font-semibold mt-16 {{ myth.color }} bg-transparent!">
+        {{ myth.myth }}
+      </h2>
+      <p class="text-base mt-6 text-base-content/60">{{ myth.reality }}</p>
+    </section>
+    <div class="p-6 flex flex-col mt-auto z-1 relative">
+      <button
+        (click)="closeModal()"
+        class="btn btn-primary btn-lg mt-3 w-full {{
+          myth.color
+        }} border-transparent"
+      >
+        Cerrar
+      </button>
+    </div>
+  </div>
+</ion-content>

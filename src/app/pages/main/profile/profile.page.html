@@ -1,0 +1,117 @@
+<app-header
+  title="Mi perfil"
+  [logo]="false"
+  headerClass="bg-transparent! text-primary-content! border-none"
+></app-header>
+
+<ion-content>
+  <div
+    class="h-60 absolute top-0 -inset-x-10 scale-x-110 bg-linear-to-r/shorter from-primary to-secondary rounded-b-full"
+  ></div>
+  <div class="p-6 z-1 relative">
+    <div class="flex flex-col items-center mt-16">
+      <div
+        class="size-40 rounded-full shadow-[0_0_20px_rgba(0,0,0,0.3)] border-4 border-white"
+      >
+        <img
+          src="https://api.dicebear.com/9.x/thumbs/svg?eyes={{ currentUser?.avatar }}&backgroundColor=e9d4ff&shapeColor=ab6ed5"
+          alt="avatar"
+          class="rounded-full"
+        />
+      </div>
+      <h2 class="text-2xl font-semibold mt-4">{{ currentUser?.name }}</h2>
+      <p class="text-base-content/60 text-sm mt-1">{{ currentUser?.email }}</p>
+      <button class="btn btn-primary btn-sm mt-4" (click)="editProfileModal()">
+        Editar perfil
+      </button>
+    </div>
+
+    <div class="mt-10">
+      <div class="card bg-base-200 mb-6">
+        <div class="card-body flex flex-col">
+          <h2 class="card-title text-base flex items-center gap-2">
+            <lucide-icon
+              [img]="icons.StarIcon"
+              class="size-5 text-warning fill-warning"
+            ></lucide-icon>
+            ¡Valora nuestra app!
+          </h2>
+          <p class="mb-2 text-base-content/60">
+            Tu opinión es muy importante para nosotros. Por favor, responde
+            nuestra encuesta y ayúdanos a mejorar.
+          </p>
+          <a
+            href="https://forms.gle/dZPTdk54NaoqjyPS6"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-accent w-full btn-sm"
+          >
+            Ir a la encuesta
+          </a>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-semibold">Índice de masa corporal</h3>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div class="bg-success/20 rounded-box p-4">
+          <p class="text-xs text-success-content font-medium mb-1">Estatura</p>
+          <p class="text-2xl font-bold text-success-content">
+            {{ currentUser?.height }} cm
+          </p>
+        </div>
+        <div class="bg-info/20 rounded-box p-4">
+          <p class="text-xs text-info-content font-medium mb-1">Peso Actual</p>
+          <p class="text-2xl font-bold text-info-content">
+            {{ currentUser?.weight }} kg
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="relative bg-secondary rounded-box p-4 text-secondary-content text-center"
+      >
+        <p class="text-sm opacity-90 mb-1">Tu IMC</p>
+        <p class="text-3xl font-bold mb-2">{{ formattedBmi }}</p>
+        <span
+          class="bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium"
+        >
+          {{ bmiCategory }}
+        </span>
+        <button
+          (click)="editBodyModal()"
+          class="absolute top-4 right-4 btn btn-sm bg-white/50 text-secondary-content btn-circle"
+        >
+          <lucide-icon
+            [img]="icons.PencilLineIcon"
+            class="size-4"
+          ></lucide-icon>
+        </button>
+      </div>
+
+      <div class="card bg-primary text-primary-content mt-6">
+        <div class="card-body flex flex-col">
+          <h2 class="card-title text-base">Modifica tu contraseña</h2>
+          <p class="mb-2 text-primary-content/60">
+            Asegúrate de mantener tu cuenta segura cambiando tu contraseña
+            regularmente.
+          </p>
+          <button
+            class="btn bg-white w-full btn-sm text-primary-content"
+            (click)="changePasswordModal()"
+          >
+            Modificar contraseña
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <button class="btn btn-outline btn-error w-full" (click)="logout()">
+          <lucide-icon [img]="icons.LogOutIcon" class="size-4"></lucide-icon>
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content>

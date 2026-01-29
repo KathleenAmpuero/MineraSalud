@@ -1,0 +1,74 @@
+<app-header
+  title="Editar datos corporales"
+  [logo]="false"
+  [backButton]="closeModal.bind(this)"
+></app-header>
+
+<ion-content>
+  <div class="h-full flex flex-col p-6">
+    <div class="flex flex-col my-auto">
+      <!-- ALTURA -->
+      <div class="mb-8">
+        <h2 class="text-lg font-semibold mb-6 text-center">
+          ¿Cuál es tu altura?
+        </h2>
+        <div class="text-center mb-4">
+          <div class="text-4xl font-bold text-primary mb-1">
+            {{ height }}
+          </div>
+          <div class="text-base-content/60 text-xs">centímetros</div>
+        </div>
+        <div class="flex justify-center items-center mb-4 gap-3">
+          <button class="btn btn-circle btn-primary" (click)="changeHeight(-1)">
+            <lucide-icon [img]="icons.MinusIcon" class="size-4"></lucide-icon>
+          </button>
+          <input
+            type="number"
+            class="input max-w-32"
+            [(ngModel)]="height"
+            (change)="calculateBMI()"
+          />
+          <button class="btn btn-circle btn-primary" (click)="changeHeight(1)">
+            <lucide-icon [img]="icons.PlusIcon" class="size-4"></lucide-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- PESO -->
+      <div class="mb-8">
+        <h2 class="text-lg font-semibold mb-4 text-center">
+          ¿Cuál es tu peso?
+        </h2>
+        <div class="text-center mb-4">
+          <div class="text-4xl font-bold text-secondary mb-1">
+            {{ weight }}
+          </div>
+          <div class="text-base-content/60 text-xs">kilogramos</div>
+        </div>
+        <div class="flex justify-center items-center mb-6 gap-3">
+          <button
+            class="btn btn-circle btn-secondary"
+            (click)="changeWeight(-1)"
+          >
+            <lucide-icon [img]="icons.MinusIcon" class="size-4"></lucide-icon>
+          </button>
+          <input
+            type="number"
+            class="input max-w-32"
+            [(ngModel)]="weight"
+            (change)="calculateBMI()"
+          />
+          <button
+            class="btn btn-circle btn-secondary"
+            (click)="changeWeight(1)"
+          >
+            <lucide-icon [img]="icons.PlusIcon" class="size-4"></lucide-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-lg w-full mt-8" (click)="saveChanges()">
+      Guardar cambios
+    </button>
+  </div>
+</ion-content>

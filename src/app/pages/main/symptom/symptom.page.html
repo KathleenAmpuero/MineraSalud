@@ -1,0 +1,462 @@
+<app-header title="Síntomas - {{ currentDate }}" [logo]="false"></app-header>
+
+<ion-content>
+  <article class="pb-20">
+    <!-- Estado General                                VER DETALLE-->
+    <section class="mt-6">
+      <h3 class="text-center text-sm font-semibold mb-4">Estado general</h3>
+      <div class="grid grid-cols-4">
+        <!-- Peso -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center justify-center w-full"
+        >
+          <span class="font-medium">Peso</span>
+          <div
+            (click)="openOptionModal('weight')"
+            [ngClass]="{
+              'bg-cyan-600 text-white scale-110': weight,
+              'bg-cyan-100 text-cyan-600': !weight
+            }"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-cyan-100 border-2 border-white! text-cyan-600"
+          >
+            <lucide-icon [img]="icons.WeightIcon"></lucide-icon>
+          </div>
+        </div>
+
+        <!-- Sueño -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center justify-center w-full"
+        >
+          <span class="font-medium">Sueño</span>
+          <div
+            (click)="openOptionModal('sleep')"
+            [ngClass]="{
+          'bg-cyan-600 text-white scale-110': sleep,
+          'bg-cyan-100 text-cyan-600': !sleep
+        }"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-cyan-100 border-2 border-white! text-cyan-600"
+          >
+            <lucide-icon [img]="icons.MoonIcon"></lucide-icon>
+          </div>
+        </div>
+
+        <!-- Agua -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center justify-center w-full"
+        >
+          <span class="font-medium">Agua</span>
+          <div
+            (click)="openOptionModal('hydration')"
+            [ngClass]="{
+          'bg-cyan-600 text-white scale-110': hydration,
+          'bg-cyan-100 text-cyan-600': !hydration
+        }"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-cyan-100 border-2 border-white! text-cyan-600"
+          >
+            <lucide-icon [img]="icons.DropletIcon"></lucide-icon>
+          </div>
+        </div>
+
+        <!-- Comida -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center justify-center w-full"
+        >
+          <span class="font-medium">Comida</span>
+          <div
+            (click)="openOptionModal('diet')"
+            [ngClass]="{
+          'bg-cyan-600 text-white scale-110': diet ,
+          'bg-cyan-100 text-cyan-600': !diet
+        }"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-cyan-100 border-2 border-white! text-cyan-600"
+          >
+            <lucide-icon [img]="icons.AppleIcon"></lucide-icon>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estado emocional -->
+    <section class="mt-10 px-6">
+      <h3 class="text-sm font-medium mb-3">Estado emocional</h3>
+      <div class="flex gap-4 items-center overflow-x-auto no-scrollbar">
+        <!-- Alegre -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center justify-center w-full"
+        >
+          <div
+            (click)="mood = 'happy'"
+            class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-pink-600 text-white scale-110': mood === 'happy',
+          'bg-pink-100 text-pink-600': mood !== 'happy'
+        }"
+          >
+            😄
+          </div>
+          <span class="font-medium">Alegre</span>
+        </div>
+
+        <!-- Calmado -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center justify-center w-full"
+        >
+          <div
+            (click)="mood = 'calm'"
+            class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-pink-600 text-white scale-110': mood === 'calm',
+          'bg-pink-100 text-pink-600': mood !== 'calm'
+        }"
+          >
+            🙂
+          </div>
+          <span class="font-medium">Calmado</span>
+        </div>
+
+        <!-- Apático -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center justify-center w-full"
+        >
+          <div
+            (click)="mood = 'apathetic'"
+            class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-pink-600 text-white scale-110': mood === 'apathetic',
+          'bg-pink-100 text-pink-600': mood !== 'apathetic'
+        }"
+          >
+            😐
+          </div>
+          <span class="font-medium">Apático</span>
+        </div>
+
+        <!-- Irritable -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center justify-center w-full"
+        >
+          <div
+            (click)="mood = 'irritable'"
+            class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-pink-600 text-white scale-110': mood === 'irritable',
+          'bg-pink-100 text-pink-600': mood !== 'irritable'
+        }"
+          >
+            😠
+          </div>
+          <span class="font-medium">Irritable</span>
+        </div>
+
+        <!-- Estresado -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center justify-center w-full"
+        >
+          <div
+            (click)="mood = 'stressed'"
+            class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-pink-600 text-white scale-110': mood === 'stressed',
+          'bg-pink-100 text-pink-600': mood !== 'stressed'
+        }"
+          >
+            😰
+          </div>
+          <span class="font-medium">Estresado</span>
+        </div>
+
+        <!-- Triste -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center justify-center w-full"
+        >
+          <div
+            (click)="mood = 'sad'"
+            class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-pink-600 text-white scale-110': mood === 'sad',
+          'bg-pink-100 text-pink-600': mood !== 'sad'
+        }"
+          >
+            😢
+          </div>
+          <span class="font-medium">Triste</span>
+        </div>
+        <div
+          class="flex flex-col gap-1 text-xxs items-center justify-center w-full"
+        >
+          <div
+            class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estado físico -->
+    <section class="mt-10 px-6">
+      <h3 class="text-sm font-medium mb-3">Estado físico</h3>
+      <div class="flex gap-4 overflow-x-auto no-scrollbar">
+        <!-- Energía -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center w-full text-center"
+        >
+          <div
+            (click)="openOptionModal('energy')"
+            class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-amber-600 text-white scale-110': energy,
+          'bg-amber-100 text-amber-600': !energy
+        }"
+          >
+            <lucide-icon [img]="icons.BatteryChargingIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Energía</span>
+        </div>
+
+        <!-- Dolor corporal -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center w-full text-center"
+        >
+          <div
+            (click)="openOptionModal('bodyPain')"
+            class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-amber-600 text-white scale-110': bodyPain,
+          'bg-amber-100 text-amber-600': !bodyPain
+        }"
+          >
+            <lucide-icon [img]="icons.ActivityIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Dolor físico</span>
+        </div>
+
+        <!-- Cefalea -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center w-full text-center"
+        >
+          <div
+            (click)="headache = !headache"
+            class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-amber-600 text-white scale-110': headache,
+          'bg-amber-100 text-amber-600': !headache
+        }"
+          >
+            <lucide-icon [img]="icons.BrainIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Cefalea</span>
+        </div>
+
+        <!-- Respiración -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center w-full text-center"
+        >
+          <div
+            (click)="breathingIssue = !breathingIssue"
+            class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-amber-600 text-white scale-110': breathingIssue,
+          'bg-amber-100 text-amber-600': !breathingIssue
+        }"
+          >
+            <lucide-icon [img]="icons.WindIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Respiración</span>
+        </div>
+
+        <!-- Náuseas -->
+        <div
+          class="flex flex-col gap-1 text-xxs items-center w-full text-center"
+        >
+          <div
+            (click)="nausea = !nausea"
+            class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-amber-600 text-white scale-110': nausea,
+          'bg-amber-100 text-amber-600': !nausea
+        }"
+          >
+            <lucide-icon [img]="icons.ThermometerIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Náuseas</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estado cardiovascular -->
+    <section class="mt-10 px-6">
+      <h3 class="text-sm font-medium mb-3">Salud cardiovascular</h3>
+      <div class="flex gap-4 overflow-x-auto no-scrollbar mask-r-from-70%">
+        <!-- Palpitaciones -->
+        <div class="flex flex-col gap-1 text-xxs items-center justify-center">
+          <div
+            (click)="palpitations = !palpitations"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-red-600 text-white scale-110': palpitations,
+          'bg-red-100 text-red-600': !palpitations
+        }"
+          >
+            <lucide-icon [img]="icons.HeartPulseIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Palpitación</span>
+        </div>
+
+        <!-- Presión arterial -->
+        <div class="flex flex-col gap-1 text-xxs items-center justify-center">
+          <div
+            (click)="openOptionModal('bloodPressure')"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-red-600 text-white scale-110': bloodPressure,
+          'bg-red-100 text-red-600': !bloodPressure
+        }"
+          >
+            <lucide-icon [img]="icons.SquareActivityIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Presión arterial</span>
+        </div>
+
+        <!-- Mareos -->
+        <div class="flex flex-col gap-1 text-xxs items-center justify-center">
+          <div
+            (click)="dizziness = !dizziness"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-red-600 text-white scale-110': dizziness,
+          'bg-red-100 text-red-600': !dizziness
+        }"
+          >
+            <lucide-icon [img]="icons.LoaderPinwheelIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Mareos</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hábitos y riesgos -->
+    <section class="mt-10 px-6">
+      <h3 class="text-sm font-medium mb-3">Hábitos y riesgos</h3>
+      <div class="flex gap-4 overflow-x-auto no-scrollbar mask-r-from-70%">
+        <!-- Cigarro -->
+        <div class="flex flex-col gap-1 text-xxs items-center justify-center">
+          <div
+            (click)="smokes = !smokes"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-green-600 text-white scale-110': smokes,
+          'bg-green-100 text-green-600': !smokes
+        }"
+          >
+            <lucide-icon [img]="icons.CigaretteIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Cigarro</span>
+        </div>
+
+        <!-- Alcohol -->
+        <div class="flex flex-col gap-1 text-xxs items-center justify-center">
+          <div
+            (click)="drinksAlcohol = !drinksAlcohol"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-green-600 text-white scale-110': drinksAlcohol,
+          'bg-green-100 text-green-600': !drinksAlcohol
+        }"
+          >
+            <lucide-icon [img]="icons.BeerIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Alcohol</span>
+        </div>
+
+        <!-- Drogas -->
+        <div class="flex flex-col gap-1 text-xxs items-center justify-center">
+          <div
+            (click)="usesDrugs = !usesDrugs"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-green-600 text-white scale-110': usesDrugs,
+          'bg-green-100 text-green-600': !usesDrugs
+        }"
+          >
+            <lucide-icon [img]="icons.TabletsIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Drogas</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Otros -->
+    <section class="mt-10 px-6">
+      <h3 class="text-sm font-medium mb-4">Otros</h3>
+      <div class="flex gap-4 overflow-x-auto no-scrollbar mask-r-from-70%">
+        <!-- Medicación -->
+        <div class="flex flex-col gap-1 text-xxs items-center justify-center">
+          <div
+            (click)="tookMedication = !tookMedication"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-purple-600 text-white scale-110': tookMedication,
+          'bg-purple-100 text-purple-600': !tookMedication
+        }"
+          >
+            <lucide-icon [img]="icons.PillIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Medicación</span>
+        </div>
+
+        <!-- Control médico -->
+        <div class="flex flex-col gap-1 text-xxs items-center justify-center">
+          <div
+            (click)="recentMedicalCheckup = !recentMedicalCheckup"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-purple-600 text-white scale-110': recentMedicalCheckup,
+          'bg-purple-100 text-purple-600': !recentMedicalCheckup
+        }"
+          >
+            <lucide-icon [img]="icons.StethoscopeIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Control</span>
+        </div>
+
+        <!-- Incidente -->
+        <div class="flex flex-col gap-1 text-xxs items-center justify-center">
+          <div
+            (click)="hadAccident = !hadAccident"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-purple-600 text-white scale-110': hadAccident,
+          'bg-purple-100 text-purple-600': !hadAccident
+        }"
+          >
+            <lucide-icon [img]="icons.AlertCircleIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Incidente</span>
+        </div>
+
+        <!-- Actividad física -->
+        <div class="flex flex-col gap-1 text-xxs items-center justify-center">
+          <div
+            (click)="openOptionModal('physicalActivity')"
+            class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center border-2 border-white!"
+            [ngClass]="{
+          'bg-purple-600 text-white scale-110': physicalActivity !== null,
+          'bg-purple-100 text-purple-600': physicalActivity === null
+        }"
+          >
+            <lucide-icon [img]="icons.DumbbellIcon"></lucide-icon>
+          </div>
+          <span class="font-medium">Actividad</span>
+        </div>
+      </div>
+    </section>
+  </article>
+  <div class="fixed bottom-0 p-6 w-full">
+    <button
+      (click)="save()"
+      [disabled]="isEmpty()"
+      class="w-full btn btn-primary btn-lg"
+    >
+      Guardar
+    </button>
+  </div>
+</ion-content>

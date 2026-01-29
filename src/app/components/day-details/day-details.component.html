@@ -1,0 +1,486 @@
+<app-header
+  title="Síntomas del {{ formattedDate }}"
+  [logo]="false"
+  [backButton]="dismiss.bind(this)"
+></app-header>
+
+<ion-content>
+  <article class="pb-20">
+    <div class="flex flex-col h-full p-6">
+      <!-- Contenido cuando hay datos -->
+      <div *ngIf="dayData">
+        <!-- Síntomas por categorías -->
+        <div class="text-base-content mb-4">
+          <h2 class="text-xl font-semibold text-center">Síntomas Reportados</h2>
+
+          <!-- Grid de síntomas cuando hay datos -->
+          <div *ngIf="reportedSymptoms.length > 0" class="space-y-6 mt-6">
+            <!-- Estado General -->
+            <div
+              *ngIf="
+                dayData.weight ||
+                dayData.sleep ||
+                dayData.hydration ||
+                dayData.diet
+              "
+            >
+              <h3 class="text-sm font-medium mb-3">Estado general</h3>
+              <div
+                class="grid w-fit gap-4"
+                [ngClass]="{
+                  'grid-cols-1': getGeneralCount() === 1,
+                  'grid-cols-2': getGeneralCount() === 2,
+                  'grid-cols-3': getGeneralCount() === 3,
+                  'grid-cols-4': getGeneralCount() === 4
+                }"
+              >
+                <!-- Peso -->
+                <div
+                  *ngIf="dayData.weight"
+                  (click)="openOptionModal('weight')"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-cyan-100 text-cyan-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.WeightIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Peso</span>
+                </div>
+
+                <!-- Sueño -->
+                <div
+                  (click)="openOptionModal('sleep')"
+                  *ngIf="dayData.sleep"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-cyan-100 text-cyan-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.MoonIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Sueño</span>
+                </div>
+
+                <!-- Hidratación -->
+                <div
+                  (click)="openOptionModal('hydration')"
+                  *ngIf="dayData.hydration"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-cyan-100 text-cyan-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.DropletIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Hidratación</span>
+                </div>
+
+                <!-- Dieta -->
+                <div
+                  (click)="openOptionModal('diet')"
+                  *ngIf="dayData.diet"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-cyan-100 text-cyan-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.AppleIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Dieta</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Estado Emocional -->
+            <div *ngIf="dayData.mood" class="mt-10">
+              <h3 class="text-sm font-medium mb-3">Estado emocional</h3>
+              <!-- Alegre -->
+              <div
+                *ngIf="dayData.mood === 'happy'"
+                class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+              >
+                <div
+                  class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-pink-100 border-2 border-white scale-110"
+                >
+                  😄
+                </div>
+                <span class="font-medium">Alegre</span>
+              </div>
+              <!-- Calmado -->
+              <div
+                *ngIf="dayData.mood === 'calm'"
+                class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+              >
+                <div
+                  class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-pink-100 border-2 border-white scale-110"
+                >
+                  🙂
+                </div>
+                <span class="font-medium">Calmado</span>
+              </div>
+              <!-- Apático -->
+              <div
+                *ngIf="dayData.mood === 'apathetic'"
+                class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+              >
+                <div
+                  class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-pink-100 border-2 border-white scale-110"
+                >
+                  😐
+                </div>
+                <span class="font-medium">Apático</span>
+              </div>
+              <!-- Irritable -->
+              <div
+                *ngIf="dayData.mood === 'irritable'"
+                class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+              >
+                <div
+                  class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-pink-100 border-2 border-white scale-110"
+                >
+                  😠
+                </div>
+                <span class="font-medium">Irritable</span>
+              </div>
+              <!-- Estresado -->
+              <div
+                *ngIf="dayData.mood === 'stressed'"
+                class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+              >
+                <div
+                  class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-pink-100 border-2 border-white scale-110"
+                >
+                  😰
+                </div>
+                <span class="font-medium">Estresado</span>
+              </div>
+              <!-- Triste -->
+              <div
+                *ngIf="dayData.mood === 'sad'"
+                class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+              >
+                <div
+                  class="text-xl size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-pink-100 border-2 border-white scale-110"
+                >
+                  😢
+                </div>
+                <span class="font-medium">Triste</span>
+              </div>
+            </div>
+            <!-- Estado Físico -->
+            <div
+              *ngIf="
+                dayData.energy ||
+                dayData.bodyPain ||
+                dayData.headache ||
+                dayData.breathingIssue ||
+                dayData.nausea
+              "
+              class="mt-10"
+            >
+              <h3 class="text-sm font-medium mb-3">Estado físico</h3>
+              <div
+                class="gap-4 grid w-fit"
+                [ngClass]="{
+                  'grid-cols-1': getPhysicalSymptomsCount() === 1,
+                  'grid-cols-2': getPhysicalSymptomsCount() === 2,
+                  'grid-cols-3': getPhysicalSymptomsCount() === 3,
+                  'grid-cols-4': getPhysicalSymptomsCount() === 4,
+                  'grid-cols-5': getPhysicalSymptomsCount() >= 5
+                }"
+              >
+                <!-- Energía -->
+                <div
+                  (click)="openOptionModal('energy')"
+                  *ngIf="dayData.energy"
+                  class="flex flex-col gap-1 text-xxs items-center text-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-amber-100 text-amber-600 border-2 text-ambert-600 border-white scale-110"
+                  >
+                    <lucide-icon
+                      [img]="icons.BatteryChargingIcon"
+                    ></lucide-icon>
+                  </div>
+                  <span class="font-medium">Energía</span>
+                </div>
+
+                <!-- Dolor físico -->
+                <div
+                  (click)="openOptionModal('bodyPain')"
+                  *ngIf="dayData.bodyPain"
+                  class="flex flex-col gap-1 text-xxs items-center text-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-amber-100 text-amber-600 border-2 text-ambert-600 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.ActivityIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Dolor físico</span>
+                </div>
+
+                <!-- Cefalea -->
+                <div
+                  *ngIf="dayData.headache"
+                  class="flex flex-col gap-1 text-xxs items-center text-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-amber-100 text-amber-600 border-2 text-ambert-600 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.BrainIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Cefalea</span>
+                </div>
+
+                <!-- Respiración -->
+                <div
+                  *ngIf="dayData.breathingIssue"
+                  class="flex flex-col gap-1 text-xxs items-center text-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-amber-100 text-amber-600 border-2 text-ambert-600 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.WindIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Respiración</span>
+                </div>
+
+                <!-- Náuseas -->
+                <div
+                  *ngIf="dayData.nausea"
+                  class="flex flex-col gap-1 text-xxs items-center text-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-amber-100 text-amber-600 border-2 text-ambert-600 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.ThermometerIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Náuseas</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Salud Cardiovascular -->
+            <div
+              *ngIf="
+                dayData.palpitations ||
+                dayData.bloodPressure ||
+                dayData.dizziness
+              "
+              class="mt-10"
+            >
+              <h3 class="text-sm font-medium mb-3">Salud cardiovascular</h3>
+              <div
+                class="grid w-fit gap-4"
+                [ngClass]="{
+                  'grid-cols-1': getCardiovascularSymptomsCount() === 1,
+                  'grid-cols-2': getCardiovascularSymptomsCount() === 2,
+                  'grid-cols-3': getCardiovascularSymptomsCount() === 3
+                }"
+              >
+                <!-- Palpitaciones -->
+                <div
+                  *ngIf="dayData.palpitations"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-red-100 text-red-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.HeartPulseIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Palpitación</span>
+                </div>
+
+                <!-- Presión arterial -->
+                <div
+                  (click)="openOptionModal('bloodPressure')"
+                  *ngIf="dayData.bloodPressure"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-red-100 text-red-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.SquareActivityIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Presión</span>
+                </div>
+
+                <!-- Mareos -->
+                <div
+                  *ngIf="dayData.dizziness"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-red-100 text-red-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.LoaderPinwheelIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Mareos</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hábitos y Riesgos -->
+            <div
+              *ngIf="
+                dayData.smokes || dayData.drinksAlcohol || dayData.usesDrugs
+              "
+              class="mt-10"
+            >
+              <h3 class="text-sm font-medium mb-3">Hábitos y riesgos</h3>
+              <div
+                class="grid w-fit gap-4"
+                [ngClass]="{
+                  'grid-cols-1': getHabitsAndRisksCount() === 1,
+                  'grid-cols-2': getHabitsAndRisksCount() === 2,
+                  'grid-cols-3': getHabitsAndRisksCount() === 3
+                }"
+              >
+                <!-- Cigarro -->
+                <div
+                  *ngIf="dayData.smokes"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-green-100 text-green-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.CigaretteIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Cigarro</span>
+                </div>
+
+                <!-- Alcohol -->
+                <div
+                  *ngIf="dayData.drinksAlcohol"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-green-100 text-green-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.BeerIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Alcohol</span>
+                </div>
+
+                <!-- Drogas -->
+                <div
+                  *ngIf="dayData.usesDrugs"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-green-100 text-green-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.TabletsIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Drogas</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Otros -->
+            <div
+              *ngIf="
+                dayData.tookMedication ||
+                dayData.recentMedicalCheckup ||
+                dayData.hadAccident ||
+                dayData.physicalActivity
+              "
+              class="mt-10"
+            >
+              <h3 class="text-sm font-medium mb-3">Otros</h3>
+              <div
+                class="grid w-fit gap-4"
+                [ngClass]="{
+                  'grid-cols-1': getOtherCount() === 1,
+                  'grid-cols-2': getOtherCount() === 2,
+                  'grid-cols-3': getOtherCount() === 3,
+                  'grid-cols-4': getOtherCount() === 4
+                }"
+              >
+                <!-- Medicación -->
+                <div
+                  *ngIf="dayData.tookMedication"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-purple-100 text-purple-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.PillIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Medicación</span>
+                </div>
+
+                <!-- Control médico -->
+                <div
+                  *ngIf="dayData.recentMedicalCheckup"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-purple-100 text-purple-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.StethoscopeIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Control</span>
+                </div>
+
+                <!-- Incidente -->
+                <div
+                  *ngIf="dayData.hadAccident"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-purple-100 text-purple-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.AlertCircleIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Incidente</span>
+                </div>
+
+                <!-- Actividad física -->
+                <div
+                  (click)="openOptionModal('physicalActivity')"
+                  *ngIf="dayData.physicalActivity"
+                  class="flex flex-col gap-1 text-xxs justify-center items-center w-fit"
+                >
+                  <div
+                    class="size-12 transition-transform duration-300 rounded-full flex items-center justify-center bg-purple-100 text-purple-600 border-2 border-white scale-110"
+                  >
+                    <lucide-icon [img]="icons.ActivityIcon"></lucide-icon>
+                  </div>
+                  <span class="font-medium">Actividad</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p *ngIf="reportedSymptoms.length === 0">
+            No se reportaron síntomas específicos este día.
+          </p>
+        </div>
+      </div>
+
+      <!-- Ya no necesitamos la sección de Información Adicional separada -->
+
+      <!-- Sin datos -->
+      <div
+        *ngIf="!dayData"
+        class="card bg-secondary/10 border-2 border-secondary border-dashed text-center p-6 my-auto flex flex-col items-center"
+      >
+        <lucide-icon
+          [img]="icons.BanIcon"
+          class="size-8 mb-4 text-secondary"
+        ></lucide-icon>
+        <h3 class="card-title mb-2">No hay datos registrados</h3>
+        <p class="text-sm text-base-content/60">
+          No se encontraron síntomas o información para este día.
+        </p>
+      </div>
+    </div>
+  </article>
+  <div class="fixed bottom-0 p-6 w-full">
+    <button class="btn btn-primary btn-lg w-full mt-auto" (click)="dismiss()">
+      Cerrar
+    </button>
+  </div>
+</ion-content>

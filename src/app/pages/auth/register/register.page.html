@@ -1,0 +1,142 @@
+<app-auth-logo></app-auth-logo>
+<ion-content>
+  <app-wrapper>
+    <div class="absolute top-0 left-0 flex flex-col w-full">
+      <div class="bg-linear-to-b from-transparent to-primary h-42"></div>
+      <img [src]="'assets/img/login/login-shape.svg'" alt="" class="w-full" />
+    </div>
+
+    <!-- Tarjeta de inicio de sesión con efecto de vidrio (glass) -->
+    <div class="relative mt-auto mb-20 w-full z-1">
+      <h2 class="card-title text-2xl mb-6 font-semibold text-primary-content">
+        Registro
+      </h2>
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <!-- Mensaje de error -->
+        <div class="alert alert-error mb-6" *ngIf="errorMessage">
+          <span>{{ errorMessage }}</span>
+        </div>
+
+        <!-- Nombre -->
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">Nombre</legend>
+          <label class="input w-full">
+            <input type="text" formControlName="name" placeholder="Tu nombre" />
+          </label>
+          <div
+            class="text-error text-sm mt-2 pl-1"
+            *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+          >
+            Por favor ingresa tu nombre completo
+          </div>
+        </fieldset>
+
+        <!-- Email -->
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">Correo electrónico</legend>
+          <label class="input w-full">
+            <input
+              type="email"
+              formControlName="email"
+              placeholder="correo@ejemplo.com"
+            />
+          </label>
+          <div
+            class="text-error text-sm mt-2 pl-1"
+            *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+          >
+            Por favor ingresa un correo electrónico válido
+          </div>
+        </fieldset>
+
+        <!-- Contraseña -->
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">Contraseña</legend>
+          <label class="input w-full">
+            <input
+              [attr.type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="******"
+            />
+            <button
+              type="button"
+              class="btn btn-circle btn-sm"
+              (click)="showPassword = !showPassword"
+            >
+              @if (showPassword) {
+              <lucide-icon [img]="icons.EyeOffIcon" class="size-4" />
+              } @else {
+              <lucide-icon [img]="icons.EyeIcon" class="size-4" />
+              }
+            </button>
+          </label>
+          <div
+            class="text-error text-sm mt-2 pl-1"
+            *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors"
+          >
+            <ng-container
+              *ngIf="registerForm.get('password')?.errors?.['minlength']"
+            >
+              La contraseña debe tener al menos 8 caracteres.
+            </ng-container>
+            <ng-container
+              *ngIf="registerForm.get('password')?.errors?.['pattern']"
+            >
+              Debe incluir mayúscula, minúscula, número y símbolo.
+            </ng-container>
+          </div>
+        </fieldset>
+
+        <!-- Confirmar Contraseña -->
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">Confirmar Contraseña</legend>
+          <label class="input w-full">
+            <input
+              [attr.type]="showConfirmPassword ? 'text' : 'password'"
+              formControlName="confirmPassword"
+              placeholder="******"
+            />
+            <button
+              type="button"
+              class="btn btn-circle btn-sm"
+              (click)="showConfirmPassword = !showConfirmPassword"
+            >
+              @if (showConfirmPassword) {
+              <lucide-icon [img]="icons.EyeOffIcon" class="size-4" />
+              } @else {
+              <lucide-icon [img]="icons.EyeIcon" class="size-4" />
+              }
+            </button>
+          </label>
+          <div
+            class="text-error text-sm mt-2 pl-1"
+            *ngIf="registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched"
+          >
+            Las contraseñas no coinciden
+          </div>
+        </fieldset>
+
+        <!-- Botón de registro -->
+        <div class="form-control mt-8">
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg w-full"
+            [disabled]="registerForm.invalid || isLoading"
+          >
+            <span
+              *ngIf="isLoading"
+              class="loading loading-spinner loading-md mr-2"
+            ></span>
+            Crear cuenta
+          </button>
+        </div>
+      </form>
+      <p class="mt-6 text-center text-sm">
+        ¿Ya tienes una cuenta?
+        <a routerLink="/auth/login" class="text-primary-content"
+          >Inicia sesión</a
+        >
+      </p>
+    </div>
+  </app-wrapper>
+</ion-content>

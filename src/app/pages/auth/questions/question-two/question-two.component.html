@@ -1,0 +1,112 @@
+<ion-content>
+  <app-wrapper>
+    <div class="absolute top-0 left-0 flex flex-col w-full">
+      <img [src]="'assets/img/login/login-shape.svg'" alt="" class="w-full" />
+    </div>
+    <!-- Header -->
+    <div class="text-center z-1 pt-6 relative">
+      <div
+        class="mx-auto bg-base-100 rounded-full size-12 flex items-center justify-center mb-4"
+      >
+        <lucide-icon
+          [img]="icons.HeartIcon"
+          class="text-error fill-error size-6"
+        ></lucide-icon>
+      </div>
+      <p class="mb-2 text-sm sm:text-base">Pregunta 2 de 2</p>
+    </div>
+
+    <div class="flex flex-col my-auto z-1 relative">
+      <!-- Height Section -->
+      <div class="mb-8">
+        <h2 class="text-lg font-semibold mb-6 text-center">
+          ¿Cuál es tu altura?
+        </h2>
+        <!-- Height Display -->
+        <div class="text-center mb-4">
+          <div class="text-4xl font-bold text-primary mb-1">
+            {{ height }}
+          </div>
+          <div class="text-base-content/60 text-xs">centímetros</div>
+        </div>
+        <!-- Height Controls -->
+        <div class="flex items-center mb-4 gap-3">
+          <button class="btn btn-circle btn-primary" (click)="changeHeight(-1)">
+            <lucide-icon [img]="icons.MinusIcon" class="size-4"></lucide-icon>
+          </button>
+          <input
+            type="number"
+            name="height"
+            class="input max-w-32"
+            [(ngModel)]="height"
+            (change)="calculateBMI()"
+          />
+          <button class="btn btn-circle btn-primary" (click)="changeHeight(1)">
+            <lucide-icon [img]="icons.PlusIcon" class="size-4"></lucide-icon>
+          </button>
+        </div>
+      </div>
+      <!-- Weight Section -->
+      <div class="mb-8">
+        <h2 class="text-lg font-semibold mb-4 text-center">
+          ¿Cuál es tu peso?
+        </h2>
+
+        <!-- Weight Display -->
+        <div class="text-center mb-4">
+          <div class="text-4xl font-bold text-secondary mb-1">
+            {{ weight }}
+          </div>
+          <div class="text-base-content/60 text-xs">kilogramos</div>
+        </div>
+
+        <!-- Weight Controls -->
+        <div class="flex items-center mb-6 gap-3">
+          <button
+            class="btn btn-circle btn-secondary"
+            (click)="changeWeight(-1)"
+          >
+            <lucide-icon [img]="icons.MinusIcon" class="size-4"></lucide-icon>
+          </button>
+          <input
+            type="number"
+            name="weight"
+            class="input max-w-32"
+            [(ngModel)]="weight"
+            (change)="calculateBMI()"
+          />
+          <button
+            class="btn btn-circle btn-secondary"
+            (click)="changeWeight(1)"
+          >
+            <lucide-icon [img]="icons.PlusIcon" class="size-4"></lucide-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    @if (bmi) {
+    <div
+      class="relative bg-secondary rounded-box p-4 text-secondary-content text-center w-full"
+    >
+      <p class="text-sm opacity-90 mb-1">Tu IMC estimado</p>
+      <p class="text-3xl font-bold mb-2">
+        {{ bmi | number : "1.1-1" }}
+      </p>
+      <span
+        class="bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium"
+      >
+        {{ bmiCategory }}
+      </span>
+    </div>
+    }
+    <div class="py-6 w-full">
+      <button
+        class="btn btn-primary btn-lg w-full"
+        [disabled]="!isValid()"
+        (click)="completeQuestions()"
+      >
+        Siguiente
+      </button>
+    </div>
+  </app-wrapper>
+</ion-content>

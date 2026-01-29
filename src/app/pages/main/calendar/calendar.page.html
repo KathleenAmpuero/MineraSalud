@@ -1,0 +1,108 @@
+<app-header title="Calendario de síntomas" [logo]="false"></app-header>
+
+<ion-content class="bg-base-200">
+  <!-- Contenedor principal del calendario -->
+  <div class="p-6 max-w-4xl mx-auto">
+    <!-- Header del calendario -->
+    <div class="bg-base-100 rounded-box border mb-6 overflow-hidden">
+      <div class="flex items-center justify-between p-6 bg-primary">
+        <button class="btn btn-circle bg-base-100" (click)="previousMonth()">
+          <lucide-icon
+            [img]="icons.ChevronLeftIcon"
+            class="size-4"
+          ></lucide-icon>
+        </button>
+
+        <div class="text-center">
+          <h2 class="text-2xl font-semibold text-primary-content">
+            {{ currentMonthName }}
+          </h2>
+          <p class="text-primary-content/60 text-sm font-medium">
+            {{ currentYear }}
+          </p>
+        </div>
+
+        <button class="btn btn-circle bg-base-100" (click)="nextMonth()">
+          <lucide-icon
+            [img]="icons.ChevronRightIcon"
+            class="size-4"
+          ></lucide-icon>
+        </button>
+      </div>
+
+      <!-- Días de la semana -->
+      <div class="grid grid-cols-7 bg-base-200 border-b">
+        <div
+          *ngFor="let day of weekDays"
+          class="p-4 text-center text-xs text-nowrap font-semibold border-r last:border-r-0"
+        >
+          {{ day }}
+        </div>
+      </div>
+
+      <!-- Grid del calendario -->
+      <div class="grid grid-cols-7">
+        <div
+          *ngFor="let dayData of getDaysInMonth()"
+          class="relative h-16 border-r border-b transition-colors"
+          [class.bg-base-200]="dayData.isSelected"
+          [class.border-accent]="dayData.isSelected"
+          (click)="selectDay(dayData)"
+        >
+          <!-- Día vacío -->
+          <div *ngIf="dayData.empty" class="w-full h-full"></div>
+
+          <!-- Día con contenido -->
+          <div
+            *ngIf="!dayData.empty"
+            class="relative w-full h-full flex flex-col items-center justify-center"
+          >
+            <!-- Número del día -->
+            <span
+              class="text-sm font-medium transition-colors"
+              [class.text-accent-content]="dayData.isSelected"
+              [class.text-white]="dayData.isToday && !dayData.isSelected"
+              [class.text-base-content]="!dayData.isSelected && !dayData.isToday"
+            >
+              {{ dayData.day }}
+            </span>
+
+            <!-- Indicador de día actual -->
+            <div
+              *ngIf="dayData.isToday && !dayData.isSelected"
+              class="absolute inset-0 bg-accent rounded-lg m-1 flex items-center justify-center"
+            >
+              <span class="text-sm font-bold text-accent-content"
+                >{{ dayData.day }}</span
+              >
+            </div>
+
+            <!-- Indicador de datos -->
+            <div
+              *ngIf="dayData.hasData"
+              class="absolute bottom-1 w-2 h-2 rounded-full"
+              [style.background-color]="dayData.color || '#10b981'"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje informativo -->
+    <div
+      class="bg-primary/10 rounded-box border-primary border-2 border-dashed p-8 text-center"
+    >
+      <lucide-icon
+        [img]="icons.CalendarIcon"
+        class="size-12 mx-auto mb-4 text-primary"
+      ></lucide-icon>
+      <h3 class="text-lg font-semibold mb-2 text-primary-content/60">
+        Explora tu historial
+      </h3>
+      <p class="text-primary-content/60 text-sm">
+        Toca cualquier día del calendario para ver los detalles de síntomas
+        registrados.
+      </p>
+    </div>
+  </div>
+</ion-content>

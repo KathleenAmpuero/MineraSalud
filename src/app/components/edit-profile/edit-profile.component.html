@@ -1,0 +1,99 @@
+<app-header
+  title="Editar Perfil"
+  [logo]="false"
+  [backButton]="closeModal.bind(this)"
+></app-header>
+
+<ion-content>
+  <div class="flex flex-col h-full p-6">
+    <div class="flex justify-center mt-6">
+      <img
+        [src]="
+          'https://api.dicebear.com/9.x/thumbs/svg?eyes=' +
+          selectedAvatar +
+          '&backgroundColor=e9d4ff' +
+          '&shapeColor=ab6ed5'
+        "
+        alt="avatar"
+        class="size-36 rounded-full"
+      />
+    </div>
+
+    <div class="grid grid-cols-4 gap-4 my-6">
+      <button
+        *ngFor="let avatar of avatarOptions"
+        (click)="selectedAvatar = avatar"
+        class="rounded-box p-1 border-2"
+        [ngClass]="{
+          'border-primary': selectedAvatar === avatar,
+          'border-transparent': selectedAvatar !== avatar
+        }"
+      >
+        <img
+          [src]="
+            'https://api.dicebear.com/9.x/thumbs/svg?eyes=' +
+            avatar +
+            '&backgroundColor=e9d4ff' +
+            '&shapeColor=ab6ed5'
+          "
+          [alt]="avatar"
+          class="rounded-box"
+        />
+      </button>
+    </div>
+
+    <form [formGroup]="form">
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Nombre</legend>
+        <label class="input w-full">
+          <input formControlName="name" placeholder="Tu nombre" />
+        </label>
+        <p *ngIf="hasError('name', 'required')" class="text-error text-sm mt-1">
+          Este campo es obligatorio
+        </p>
+        <p
+          *ngIf="hasError('name', 'minlength')"
+          class="text-error text-sm mt-1"
+        >
+          Debe tener al menos 2 caracteres
+        </p>
+      </fieldset>
+
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Correo electrónico</legend>
+        <label class="input w-full">
+          <input formControlName="email" placeholder="correo@ejemplo.com" />
+        </label>
+        <p
+          *ngIf="hasError('email', 'required')"
+          class="text-error text-sm mt-1"
+        >
+          Este campo es obligatorio
+        </p>
+        <p *ngIf="hasError('email', 'email')" class="text-error text-sm mt-1">
+          Formato no válido
+        </p>
+      </fieldset>
+
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Edad</legend>
+        <label class="input w-full">
+          <input formControlName="age" type="number" placeholder="Tu edad" />
+        </label>
+        <p *ngIf="hasError('age', 'required')" class="text-error text-sm mt-1">
+          Este campo es obligatorio
+        </p>
+        <p *ngIf="hasError('age', 'min')" class="text-error text-sm mt-1">
+          Debe ser mayor a 10
+        </p>
+      </fieldset>
+    </form>
+    <button
+      type="submit"
+      class="btn btn-primary btn-lg w-full mt-auto"
+      (click)="saveChanges()"
+    >
+      Guardar Cambios
+    </button>
+  </div>
+</ion-content>

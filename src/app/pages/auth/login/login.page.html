@@ -1,0 +1,96 @@
+<app-auth-logo></app-auth-logo>
+<ion-content>
+  <app-wrapper>
+    <div class="absolute top-0 left-0 flex flex-col w-full">
+      <div class="bg-linear-to-b from-transparent to-primary h-32"></div>
+      <img [src]="'assets/img/login/login-shape.svg'" alt="" class="w-full" />
+    </div>
+    <!-- Tarjeta de inicio de sesión con efecto de vidrio (glass) -->
+    <div class="mt-auto mb-20 w-full z-1 relative">
+      <h2 class="card-title text-2xl mb-6 font-semibold text-primary-content">
+        Inicio de sesión
+      </h2>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="alert alert-error mb-6" *ngIf="errorMessage">
+          <span>{{ errorMessage }}</span>
+        </div>
+
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">Correo electrónico</legend>
+          <label class="input w-full">
+            <input
+              type="email"
+              formControlName="email"
+              placeholder="correo@ejemplo.com"
+            />
+          </label>
+          <div
+            class="text-error text-sm mt-2 pl-1"
+            *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+          >
+            Por favor ingresa un correo electrónico válido
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">Contraseña</legend>
+          <label class="input w-full">
+            <input
+              [attr.type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="******"
+              class="placeholder:text-base-content/50"
+            />
+            <button
+              type="button"
+              class="btn btn-circle btn-sm"
+              (click)="showPassword = !showPassword"
+            >
+              @if (showPassword) {
+              <lucide-icon [img]="icons.EyeOffIcon" class="size-4" />
+              } @else {
+              <lucide-icon [img]="icons.EyeIcon" class="size-4" />
+              }
+            </button>
+          </label>
+          <div
+            class="text-error text-sm mt-2 pl-1"
+            *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+          >
+            La contraseña debe tener al menos 6 caracteres
+          </div>
+          <div class="text-end">
+            <a
+              routerLink="/auth/reset-password"
+              class="text-xs hover:underline"
+            >
+              ¿Olvidaste tu contraseña?
+            </a>
+          </div>
+        </fieldset>
+
+        <div class="mt-8">
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg w-full"
+            [disabled]="loginForm.invalid || isLoading"
+          >
+            <span
+              *ngIf="isLoading"
+              class="loading loading-spinner loading-md mr-2"
+            ></span>
+            Iniciar sesión
+          </button>
+        </div>
+      </form>
+
+      <!-- Enlace para navegar a la página de registro -->
+      <p class="mt-6 text-center text-sm">
+        ¿No tienes una cuenta?
+        <a routerLink="/auth/register" class="text-primary-content"
+          >Regístrate</a
+        >
+      </p>
+    </div>
+  </app-wrapper>
+</ion-content>

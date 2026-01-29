@@ -1,0 +1,59 @@
+<ion-content [fullscreen]="true">
+  <app-wrapper>
+    <div class="absolute top-0 left-0 flex flex-col w-full">
+      <img [src]="'assets/img/login/login-shape.svg'" alt="" class="w-full" />
+    </div>
+    <!-- Header -->
+    <div class="text-center z-1 pt-6">
+      <div
+        class="mx-auto bg-base-100 rounded-full size-12 flex items-center justify-center mb-4"
+      >
+        <lucide-icon
+          [img]="icons.HeartIcon"
+          class="text-error fill-error size-6"
+        ></lucide-icon>
+      </div>
+      <p class="mb-2 text-sm sm:text-base">Pregunta 1 de 2</p>
+    </div>
+    <div class="my-auto">
+      <p class="text-xl text-white-h text-center font-semibold">
+        ¿Cuándo naciste?
+      </p>
+
+      <form [formGroup]="form" class="flex flex-col justify-between w-full">
+        <div class="flex flex-col items-center">
+          <ion-datetime
+            [formControl]="form.controls.birthday"
+            (ionChange)="onDateChange($event)"
+            presentation="date"
+            [preferWheel]="true"
+            class="text-center"
+          ></ion-datetime>
+
+          <div *ngIf="canShowError && form.controls.birthday.errors">
+            <div
+              class="alert alert-error mb-6"
+              *ngIf="form.controls.birthday.errors?.['invalidDate'] || form.controls.birthday.errors?.['futureDate']"
+            >
+              <span>
+                La fecha ingresada no es válida. Por favor, revisa e intenta
+                nuevamente.
+              </span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="w-full py-6">
+      <button
+        type="button"
+        (click)="goNextQuestion()"
+        [disabled]="!form.controls.birthday.value"
+        class="btn btn-primary btn-lg w-full"
+      >
+        Siguiente
+      </button>
+    </div>
+  </app-wrapper>
+</ion-content>

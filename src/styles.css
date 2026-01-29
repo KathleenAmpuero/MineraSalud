@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: all;
+}
+
+@theme {
+  --text-xxs: 10px;
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@utility pt-safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+@layer base {
+  * {
+    @apply border-base-content/10 scroll-smooth;
+  }
+  body {
+    @apply bg-base-100 text-base-content;
+  }
+  [role="button"],
+  button {
+    cursor: pointer;
+  }
+}

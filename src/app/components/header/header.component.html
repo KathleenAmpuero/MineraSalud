@@ -1,0 +1,46 @@
+<header
+  class="relative w-full z-10 pt-safe-top bg-base-100/80 backdrop-blur-md border-b"
+  [ngClass]="[headerClass || '']"
+>
+  <div class="h-14 flex items-center gap-4 px-6">
+    <div *ngIf="shouldShowBackButton()" slot="start">
+      <button
+        (click)="onBackButtonClick()"
+        class="btn btn-circle"
+        [ngClass]="[buttonClass || '']"
+      >
+        <lucide-icon
+          slot="icon-only"
+          [img]="icons.ArrowLeftIcon"
+          class="size-6"
+        ></lucide-icon>
+      </button>
+    </div>
+    <div *ngIf="logo" class="flex items-center h-full gap-2">
+      <div
+        class="rounded-full bg-base-100 size-10 flex items-center justify-center border border-base-content/10"
+      >
+        <img
+          [ngSrc]="'assets/img/minera-salud-logo.png'"
+          alt="Minera Salud Logo"
+          width="28"
+          height="28"
+          priority="true"
+          class="size-7"
+        />
+      </div>
+      <span class="text-base font-semibold">Minera Salud</span>
+    </div>
+    <h1 *ngIf="!logo" slot="start" class="text-base font-semibold">
+      {{ title }}
+    </h1>
+    <button
+      *ngIf="profileButton"
+      slot="end"
+      class="ms-auto btn btn-primary bg-primary/50 btn-circle"
+      (click)="goToProfile()"
+    >
+      <lucide-icon [img]="icons.UserIcon" class="size-5"></lucide-icon>
+    </button>
+  </div>
+</header>

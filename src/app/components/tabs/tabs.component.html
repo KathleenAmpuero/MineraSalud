@@ -1,0 +1,37 @@
+<ion-tabs (ionTabsDidChange)="tabChanged($event)">
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home">
+      <div
+        [ngClass]="{
+              'text-primary-content': selectedTab === 'home',
+            }"
+        class="inner-tab flex flex-col items-center justify-center gap-1 w-full py-2.5"
+      >
+        <lucide-icon [img]="icons.HomeIcon" class="size-5"></lucide-icon>
+        <span class="text-xs text-nowrap">Inicio</span>
+      </div>
+    </ion-tab-button>
+    <ion-tab-button tab="symptom">
+      <div
+        [ngClass]="{
+              'text-primary-content': selectedTab === 'symptom',
+            }"
+        class="inner-tab flex flex-col items-center justify-center gap-1 w-full py-2.5"
+      >
+        <lucide-icon [img]="icons.CirclePlus" class="size-5"></lucide-icon>
+        <span class="text-xs text-nowrap">Síntomas</span>
+      </div>
+    </ion-tab-button>
+    <ion-tab-button tab="calendar">
+      <div
+        [ngClass]="{
+              'text-primary-content': selectedTab === 'calendar',
+            }"
+        class="inner-tab flex flex-col items-center justify-center gap-1 w-full py-2.5"
+      >
+        <lucide-icon [img]="icons.CalendarIcon" class="size-5"></lucide-icon>
+        <span class="text-xs text-nowrap">Calendario</span>
+      </div>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

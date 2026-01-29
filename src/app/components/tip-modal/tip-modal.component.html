@@ -1,0 +1,45 @@
+<app-header
+  [title]="title"
+  [logo]="false"
+  [backButton]="closeModal.bind(this)"
+  headerClass="backdrop-blur-none bg-transparent! text-white! border-none"
+  buttonClass="bg-transparent border-transparent text-white"
+></app-header>
+
+<ion-content>
+  <div class="flex flex-col h-full">
+    <img
+      src="{{ tip.image }}"
+      alt="{{ tip.title }}"
+      class="fixed top-0 left-0 h-[400px] w-full object-cover"
+    />
+    <div class="fixed top-0 left-0 h-[400px] w-full bg-blue-950/20"></div>
+    <div class="h-80"></div>
+    <section class="bg-base-100 rounded-t-4xl pt-6 z-1 relative">
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold mb-2 {{ tip.color }} bg-transparent!">
+          {{ tip.detail.title }}
+        </h2>
+        <p class="text-base-content/60 text-sm">{{ tip.detail.description }}</p>
+        <ul class="mt-10 text-sm space-y-3 relative">
+          <div class="w-2 h-full absolute left-0 top-0 {{ tip.color }}"></div>
+          @for (item of tip.detail.tips; track item) {
+          <li class="pl-6">
+            {{ item }}
+          </li>
+          }
+        </ul>
+      </div>
+    </section>
+    <div class="p-6 flex flex-col mt-auto">
+      <button
+        (click)="closeModal()"
+        class="btn btn-primary btn-lg mt-3 w-full {{
+          tip.color
+        }} border-transparent"
+      >
+        Cerrar
+      </button>
+    </div>
+  </div>
+</ion-content>

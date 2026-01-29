@@ -1,0 +1,19 @@
+<app-header [title]="title" [logo]="false"></app-header>
+<div class="flex flex-col flex-1 p-4">
+  <ul class="space-y-2">
+    <li
+      *ngFor="let option of options"
+      (click)="selectOption(option)"
+      class="btn w-full justify-start"
+      [class.btn-secondary]="selectedValue === option"
+    >
+      {{ translateOption(option) }}
+    </li>
+  </ul>
+  <button
+    (click)="confirmAndClose()"
+    class="btn btn-primary btn-lg mt-auto w-full"
+  >
+    Listo
+  </button>
+</div>
